@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title><%- name %></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="<%- description %>">
+        <link rel="icon" type="image/png" href="icon.png">
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <style>
+            @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700');
+
+            * {
+                box-sizing: border-box;
+            }
+
+            html,
+            body {
+                color: #333;
+                font-family: 'Roboto', sans-serif;
+                font-size: 16px;
+                line-height: 1.6;
+                margin: 0;
+            }
+
+            body {
+                display: flex;
+                flex-direction: column;
+            }
+
+            header {
+                border-bottom: 1px solid lightgray;
+                display: flex;
+                flex-grow: 0;
+                flex-shrink: 0;
+                position: relative;
+            }
+
+            .content {
+                display: flex;
+                min-height: 100vh;
+            }
+
+            nav {
+                background-color: #F5F7F9;
+                border-right: 1px solid lightgray;
+                flex-grow: 0;
+                flex-shrink: 0;
+                padding: 24px;
+                position: relative;
+                width: 288px;
+            }
+
+            nav ul {
+                margin: 0;
+                padding: 0;
+            }
+
+            .scroll nav ul {
+                left: 24px;
+                position: fixed;
+                top: 24px;
+                width: calc(288px - 48px);
+            }
+
+            nav li {
+                list-style: none;
+            }
+
+            nav li a,
+            nav .folder {
+                border-bottom: 0;
+                color: inherit;
+                text-transform: capitalize;
+            }
+
+            nav [data-depth="2"] {
+                margin-left: 12px;
+            }
+
+            main {
+                flex: 1;
+                padding: 24px;
+            }
+
+            .container {
+                margin: auto;
+                max-width: 800px;
+                position: relative;
+            }
+
+            .copy > *:first-child {
+                margin-top: 0;
+                padding-top: 0;
+            }
+
+            .title {
+                flex-grow: 0;
+                flex-shrink: 0;
+                font-size: 24px;
+                font-weight: 700;
+                line-height: 24px;
+                padding: 24px 24px 24px 78px;
+                width: 288px;
+            }
+
+            .logo {
+                background-repeat: no-repeat;
+                background-size: contain;
+                display: inline-block;
+                height: 36px;
+                left: 24px;
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 36px;
+            }
+
+            .header-anchor {
+                border-bottom: 0;
+                color: inherit;
+                visibility: hidden;
+            }
+
+            h1:hover .header-anchor,
+            h2:hover .header-anchor,
+            h3:hover .header-anchor,
+            h4:hover .header-anchor,
+            h5:hover .header-anchor,
+            h6:hover .header-anchor {
+                visibility: visible;
+            }
+
+            .feedback {
+                background-color: #E6ECF1;
+                border-radius: 3px;
+                bottom: 24px;
+                color: #9DAAB6;
+                font-size: 12px;
+                left: 24px;
+                padding: 12px 12px 12px 54px;
+                position: fixed;
+                width: calc(288px - 48px);
+            }
+
+            .feedback a {
+                color: inherit;
+            }
+
+            .feedback i {
+                font-size: 32px;
+                left: 12px;
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+
+            .edit {
+                align-items: center;
+                display: flex;
+                flex: 1;
+                justify-content: flex-end;
+                padding: 24px;
+            }
+
+            .edit a {
+                border-bottom: 0;
+                color: inherit;
+            }
+
+            .edit > * {
+                cursor: pointer;
+                height: 20px;
+                line-height: 20px;
+                margin-left: 20px;
+                text-align: center;
+                width: 20px;
+            }
+
+            .version {
+                color: gray;
+                font-size: 16px;
+            }
+
+            .expanded nav {
+                display: none;
+            }
+
+            .expanded .container {
+                max-width: 1200px;
+            }
+
+            #menu {
+                display: none;
+                z-index: 2;
+            }
+
+            a {
+                border-bottom: 1px solid;
+                color: #2980b9;
+                text-decoration: none;
+            }
+
+            .bottomMatter {
+                color: lightgray;
+                display: inline-block;
+                font-size: 12px;
+                margin: 32px 0;
+                position: relative;
+                width: 100%;
+            }
+
+            #top {
+                position: absolute;
+                right: 0;
+                top: 0;
+            }
+
+            @media (max-width: 800px) {
+                html,
+                body {
+                    height: 100%;
+                }
+
+                main {
+                    padding: 0;
+                }
+
+                .content {
+                    -webkit-overflow-scrolling: touch;
+                    min-height: 0;
+                    overflow: auto;
+                }
+
+                .copy {
+                    padding: 12px;
+                }
+
+                #expando,
+                .version,
+                .pullrequest,
+                .help {
+                    display: none;
+                }
+
+                #menu {
+                    display: block;
+                }
+
+                nav {
+                    border-left: 1px solid lightgray;
+                    border-right: 0;
+                    display: block !important;
+                    height: 100%;
+                    max-width: calc(100vw - 48px);
+                    position: fixed;
+                    right: 0;
+                    top: 0;
+                    transform: translateX(100%);
+                    transition: transform ease-out 0.2s;
+                    z-index: 1;
+                }
+
+                nav ul {
+                    position: static;
+                    width: 100%;
+                }
+
+                .edit {
+                    flex-grow: 0;
+                    flex-shrink: 0;
+                    padding: 12px;
+                }
+
+                .menu nav {
+                    transform: translateX(0);
+                }
+
+                .title {
+                    flex: 1;
+                    font-size: 18px;
+                    padding: 12px 12px 12px 54px;
+                    width: auto;
+                    word-break: break-word;
+                }
+
+                .logo {
+                    height: 24px;
+                    left: 12px;
+                    width: 24px;
+                }
+            }
+        </style>
+	</head>
+	<body>
+        <header>
+            <div class="title">
+                <% if (logo) { %>
+                    <div class="logo" style="background-image: url(<%- logo %>)"></div>
+                <% } %>
+                <%- name %>
+                <% if (projectVersion) { %>
+                    <span class="version"><%- projectVersion %></span>
+                <% } %>
+            </div>
+            <div class="edit">
+                <a href="" class="help">
+                    <i class="fa fa-question" aria-hidden="true"></i>
+                </a>
+                <% if (repo) { %>
+                    <a href="https://github.com/<%- repo %>" class="pullrequest">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </a>
+                <% } %>
+                <i class="fa fa-plus-square" aria-hidden="true" id="expando"></i>
+                <i class="fa fa-bars" aria-hidden="true" id="menu"></i>
+            </div>
+        </header>
+        <div class="content">
+            <nav>
+                <ul>
+                    <li>
+                        <a href="/">home</a>
+                    </li>
+                    <%
+                        let depth = 0;
+                        const walk = (children) => {
+                            children.sort().forEach(child => {
+                                if (child.type === 'directory') {
+                                    if (child.children) {
+                                        if (depth > 0) {
+                    %>
+                                            <li>
+                                                <div class="folder" data-depth="<%- depth %>"><%- getDisplayName(child) %></div>
+                                            </li>
+                    <%                  }
+                                        depth++;
+                                        walk(child.children);
+                                    }
+                                    return;
+                                }
+                                if (getDisplayName(child) !== 'index') {
+                    %>
+                                    <li>
+                                        <a href="/<%- relative(cwd, child.path).replace(/.md$/, '') %>" data-depth="<%- depth %>"><%- getDisplayName(child) %></a>
+                                    </li>
+                    <%
+                                }
+                            });
+                        };
+                        walk(tree.children);
+                    %>
+                </ul>
+                <% if(repo) { %>
+                    <div class="feedback">
+                        <i class="fa fa-bug" aria-hidden="true"></i>
+                        Found a documentation bug?<br>
+                        <a href="https://github.com/<%- repo %>/issues/new">File an issue</a>
+                    </div>
+                <% } %>
+            </nav>
+            <main>
+                <div class="container copy">
+                    <%- content %>
+                    <div class="bottomMatter">
+                        Last updated: <%- getDate() %> <span id="top">top <i class="fa fa-arrow-up" aria-hidden="true"></i></span>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <script>
+            const header = document.querySelector('header');
+            function onScroll() {
+                document.body.classList.toggle('scroll', document.documentElement.scrollTop > header.offsetHeight);
+            }
+            window.addEventListener('scroll', onScroll);
+            onScroll();
+
+            document.querySelector('#expando').addEventListener('click', ({ target }) => {
+                const expanded = target.classList.contains('fa-minus-square');
+                target.classList.toggle('fa-minus-square', !expanded);
+                target.classList.toggle('fa-minus-plus', expanded);
+                document.body.classList.toggle('expanded', !expanded);
+            });
+
+            document.querySelector('#menu').addEventListener('click', ({ target }) => {
+                const open = target.classList.contains('fa-times');
+                target.classList.toggle('fa-times', !open);
+                target.classList.toggle('fa-bars', open);
+                document.body.classList.toggle('menu', !open);
+            });
+        </script>
+	</body>
+</html>
+
+<%
+function getDate() {
+    const d = new Date();
+    return `${d.getMonth() + 1}/${d.getDate()}/${1900 + d.getYear()}`
+}
+
+function getDisplayName(child) {
+    return child.name.replace(/(^\d+-|.md$)/, '').replace(/-/g, ' ');
+}
+%>

@@ -1,0 +1,26 @@
+{
+  "name": "uncrate",
+  "version": "1.0.0",
+  "description": "Minimal documentation generator based on file structure",
+  "keywords": [
+    "static",
+    "markdown",
+    "documentation",
+    "generator",
+    "structure"
+  ],
+  "homepage": "https://github.com/bitpshr/uncrate#readme",
+  "bugs": "https://github.com/bitpshr/uncrate/issues",
+  "license": "WTFPL",
+  "author": "bitpshr <mail@bitpshr.net> (https://bitpshr.net/)",
+  "bin": "./uncrate.js",
+  "repository": "github:bitpshr/uncrate",
+  "dependencies": {
+    "directory-tree": "^2.1.1",
+    "ejs": "^2.6.1",
+    "fs-extra": "^7.0.1",
+    "markdown-it": "^8.4.2",
+    "markdown-it-anchor": "^5.0.2",
+    "yargs": "^12.0.5"
+  }
+}
