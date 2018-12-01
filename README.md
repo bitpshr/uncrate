@@ -7,8 +7,7 @@ Uncrate is a minimal static documentation generator that builds sites based on t
 ## Usage
 
 ```sh
-$ npm i -g uncrate
-$ uncrate -h
+$ npx uncrate -h
 ```
 
 ## License
