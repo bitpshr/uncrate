@@ -1,4 +1,4 @@
-![Uncrate logo](logo.png?raw=true)
+<img alt="Uncrate logo" src="logo.png" width="70" height="auto" />
 
 Uncrate is a minimal static documentation generator that builds sites based on the file structure of markdown files.
 
