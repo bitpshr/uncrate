@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title><%- name %></title>
+		<title><%- args.name %></title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="description" content="<%- description %>">
-        <link rel="icon" type="image/png" href="icon.png">
-        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+		<meta name="description" content="<%- args.description %>">
+        <link rel="icon" type="image/png" href="<%- args.logo %>">
         <style>
             @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700');
+            @import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
             * {
                 box-sizing: border-box;
@@ -18,7 +18,7 @@
                 color: #333;
                 font-family: 'Roboto', sans-serif;
                 font-size: 16px;
-                line-height: 1.6;
+                line-height: 28px;
                 margin: 0;
             }
 
@@ -73,8 +73,22 @@
                 text-transform: capitalize;
             }
 
-            nav [data-depth="2"] {
+            nav .folder {
+
+            }
+
+            nav .indent {
+                margin-bottom: 24px;
                 margin-left: 12px;
+            }
+
+            nav ul > .indent {
+                margin-left: 0;
+            }
+
+            nav ul > .indent > li,
+            nav ul > li {
+                font-weight: 700;
             }
 
             main {
@@ -83,6 +97,7 @@
             }
 
             .container {
+                font-weight: 300;
                 margin: auto;
                 max-width: 800px;
                 position: relative;
@@ -204,12 +219,14 @@
                 color: lightgray;
                 display: inline-block;
                 font-size: 12px;
+                font-weight: 400;
                 margin: 32px 0;
                 position: relative;
                 width: 100%;
             }
 
             #top {
+                cursor: pointer;
                 position: absolute;
                 right: 0;
                 top: 0;
@@ -294,20 +311,20 @@
 	<body>
         <header>
             <div class="title">
-                <% if (logo) { %>
-                    <div class="logo" style="background-image: url(<%- logo %>)"></div>
+                <% if (args.logo) { %>
+                    <div class="logo" style="background-image: url(<%- args.logo %>)"></div>
                 <% } %>
-                <%- name %>
-                <% if (projectVersion) { %>
-                    <span class="version"><%- projectVersion %></span>
+                <%- args.name %>
+                <% if (args.projectVersion) { %>
+                    <span class="version"><%- args.projectVersion %></span>
                 <% } %>
             </div>
             <div class="edit">
-                <a href="" class="help">
-                    <i class="fa fa-question" aria-hidden="true"></i>
+                <a href="<%- args.subdir %>" class="help">
+                    <i class="fa fa-home" aria-hidden="true"></i>
                 </a>
-                <% if (repo) { %>
-                    <a href="https://github.com/<%- repo %>" class="pullrequest">
+                <% if (args.repo) { %>
+                    <a href="https://github.com/<%- args.repo %>" class="pullrequest">
                         <i class="fa fa-pencil" aria-hidden="true"></i>
                     </a>
                 <% } %>
@@ -319,50 +336,54 @@
             <nav>
                 <ul>
                     <li>
-                        <a href="/">home</a>
+                        <a href="<%- args.subdir %>">home</a>
                     </li>
+                    <%  const walk = (children) => { %>
+                            <div class="indent">
                     <%
-                        let depth = 0;
-                        const walk = (children) => {
-                            children.sort().forEach(child => {
-                                if (child.type === 'directory') {
-                                    if (child.children) {
-                                        if (depth > 0) {
+                                children.sort().forEach(child => {
+                                    if (child.type === 'directory') {
+                                        if (child.children) {
                     %>
                                             <li>
-                                                <div class="folder" data-depth="<%- depth %>"><%- getDisplayName(child) %></div>
+                                                <div class="folder"><%- getDisplayName(child) %></div>
                                             </li>
-                    <%                  }
-                                        depth++;
-                                        walk(child.children);
-                                    }
-                                    return;
-                                }
-                                if (getDisplayName(child) !== 'index') {
-                    %>
-                                    <li>
-                                        <a href="/<%- relative(cwd, child.path).replace(/.md$/, '') %>" data-depth="<%- depth %>"><%- getDisplayName(child) %></a>
-                                    </li>
                     <%
-                                }
-                            });
+                                            walk(child.children);
+                                        }
+                                        return;
+                                    }
+                                    if (getDisplayName(child) !== 'index') {
+                    %>
+                                        <li>
+                                            <a href="<%- args.subdir %><%- relative(process.cwd(), child.path.replace(/[\/\\]\d+_/g, '/')).replace(/.md$/, '') %>"><%- getDisplayName(child) %></a>
+                                        </li>
+                    <%
+                                    }
+                                });
+                    %>
+                            </div>
+                    <%
                         };
                         walk(tree.children);
                     %>
                 </ul>
-                <% if(repo) { %>
+                <% if (args.repo) { %>
                     <div class="feedback">
                         <i class="fa fa-bug" aria-hidden="true"></i>
                         Found a documentation bug?<br>
-                        <a href="https://github.com/<%- repo %>/issues/new">File an issue</a>
+                        <a href="https://github.com/<%- args.repo %>/issues/new">File an issue</a>
                     </div>
                 <% } %>
             </nav>
             <main>
                 <div class="container copy">
-                    <%- content %>
+                    <%- copy %>
                     <div class="bottomMatter">
-                        Last updated: <%- getDate() %> <span id="top">top <i class="fa fa-arrow-up" aria-hidden="true"></i></span>
+                        Last updated:
+                        <% const d = new Date(); %>
+                        <%- `${d.getMonth() + 1}/${d.getDate()}/${1900 + d.getYear()}` %>
+                        <span id="top">Top <i class="fa fa-arrow-up" aria-hidden="true"></i></span>
                     </div>
                 </div>
             </main>
@@ -388,17 +409,16 @@
                 target.classList.toggle('fa-bars', open);
                 document.body.classList.toggle('menu', !open);
             });
+
+            document.querySelector('#top').addEventListener('click', () => {
+                document.documentElement.scrollTop = 0;
+            });
         </script>
 	</body>
 </html>
 
 <%
-function getDate() {
-    const d = new Date();
-    return `${d.getMonth() + 1}/${d.getDate()}/${1900 + d.getYear()}`
-}
-
 function getDisplayName(child) {
-    return child.name.replace(/(^\d+-|.md$)/, '').replace(/-/g, ' ');
+    return child.name.replace(/^\d+_/, '').replace(/.md$/, '').replace(/_/g, ' ');
 }
 %>
