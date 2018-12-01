@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title><%- args.name %></title>
+		<title><%- config.name %></title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="description" content="<%- args.description %>">
-        <link rel="icon" type="image/png" href="<%- args.logo %>">
+		<meta name="description" content="<%- config.description %>">
+        <link rel="icon" type="image/png" href="<%- config.logo %>">
         <style>
             @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700');
             @import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
@@ -311,20 +311,20 @@
 	<body>
         <header>
             <div class="title">
-                <% if (args.logo) { %>
-                    <div class="logo" style="background-image: url(<%- args.logo %>)"></div>
+                <% if (config.logo) { %>
+                    <div class="logo" style="background-image: url(<%- config.logo %>)"></div>
                 <% } %>
-                <%- args.name %>
-                <% if (args.projectVersion) { %>
-                    <span class="version"><%- args.projectVersion %></span>
+                <%- config.name %>
+                <% if (config.projectVersion) { %>
+                    <span class="version"><%- config.projectVersion %></span>
                 <% } %>
             </div>
             <div class="edit">
-                <a href="<%- args.subdir %>" class="help">
+                <a href="<%- config.subdir %>" class="help">
                     <i class="fa fa-home" aria-hidden="true"></i>
                 </a>
-                <% if (args.repo) { %>
-                    <a href="https://github.com/<%- args.repo %>" class="pullrequest">
+                <% if (config.repo) { %>
+                    <a href="https://github.com/<%- config.repo %>" class="pullrequest">
                         <i class="fa fa-pencil" aria-hidden="true"></i>
                     </a>
                 <% } %>
@@ -336,7 +336,7 @@
             <nav>
                 <ul>
                     <li>
-                        <a href="<%- args.subdir %>">home</a>
+                        <a href="<%- config.subdir %>">home</a>
                     </li>
                     <%  const walk = (children) => { %>
                             <div class="indent">
@@ -356,7 +356,7 @@
                                     if (getDisplayName(child) !== 'index') {
                     %>
                                         <li>
-                                            <a href="<%- args.subdir %><%- relative(process.cwd(), child.path.replace(/[\/\\]\d+_/g, '/')).replace(/.md$/, '') %>"><%- getDisplayName(child) %></a>
+                                            <a href="<%- config.subdir %><%- relative(process.cwd(), child.path.replace(/[\/\\]\d+_/g, '/')).replace(/.md$/, '') %>"><%- getDisplayName(child) %></a>
                                         </li>
                     <%
                                     }
@@ -368,11 +368,11 @@
                         walk(tree.children);
                     %>
                 </ul>
-                <% if (args.repo) { %>
+                <% if (config.repo) { %>
                     <div class="feedback">
                         <i class="fa fa-bug" aria-hidden="true"></i>
                         Found a documentation bug?<br>
-                        <a href="https://github.com/<%- args.repo %>/issues/new">File an issue</a>
+                        <a href="https://github.com/<%- config.repo %>/issues/new">File an issue</a>
                     </div>
                 <% } %>
             </nav>

@@ -1,31 +1,36 @@
 #!/usr/bin/env node
 
 const { dirname, join, relative } = require('path');
-const { ensureDirSync, readFileSync, removeSync, writeFileSync } = require('fs-extra');
+const { existsSync, ensureDirSync, readFileSync, removeSync, writeFileSync } = require('fs-extra');
+const { options } = require('yargs');
 const markdown = require('markdown-it')().use(require('markdown-it-anchor'), {
 	permalink: true,
 	permalinkSymbol: '#'
 });
 
-const args = require('yargs')
-	.option('d', { alias: 'description', desc: 'Generated site meta description' })
-	.option('e', { alias: 'exclude', desc: 'RegExp of paths to ignore', default: 'node_modules' })
-	.option('l', { alias: 'logo', desc: 'URL of a project logo image' })
-	.option('n', { alias: 'name', desc: 'Project name' })
-	.option('o', { alias: 'out', desc: 'Path where the site should be generated', default: 'dist' })
-	.option('p', { alias: 'projectVersion', desc: 'Project version' })
-	.option('r', { alias: 'repo', desc: 'URL of a project git repository' })
-	.option('s', { alias: 'subdir', desc: 'Path to use as a base for generated URLs', default: '/' })
-	.alias('h', 'help').argv;
+const args = options({
+	c: { alias: 'config', desc: 'Custom configuration file location', default: 'uncrate.config.js' },
+	d: { alias: 'description', desc: 'Generated site meta description' },
+	e: { alias: 'exclude', desc: 'RegExp of paths to ignore', default: 'node_modules' },
+	l: { alias: 'logo', desc: 'URL of a project logo image' },
+	n: { alias: 'name', desc: 'Project name' },
+	o: { alias: 'out', desc: 'Path where the site should be generated', default: 'dist' },
+	p: { alias: 'projectVersion', desc: 'Project version' },
+	r: { alias: 'repo', desc: 'URL of a project git repository' },
+	s: { alias: 'subdir', desc: 'Path to use as a base for generated URLs', default: '/' }
+}).alias('h', 'help').argv;
 
-removeSync(args.out);
+const configPath = join(process.cwd(), args.config);
+const config = existsSync(configPath) ? { ...require(configPath), ...args } : args;
+
+removeSync(config.out);
 const template = readFileSync(join(__dirname, 'template.html'), 'utf8');
 const tree = require('directory-tree')(process.cwd(), {
-	exclude: new RegExp(args.exclude),
+	exclude: new RegExp(config.exclude),
 	extensions: /\.md$/
 });
 
-const walk = children => {
+(function walk(children) {
 	children
 		.sort((a, b) => (a.name < b.name ? -1 : 1))
 		.forEach(child => {
@@ -33,12 +38,10 @@ const walk = children => {
 				return child.children && walk(child.children);
 			}
 			const copy = markdown.render(readFileSync(child.path, 'utf8'));
-			const html = require('ejs').render(template, { args, copy, relative, tree });
+			const html = require('ejs').render(template, { config, copy, relative, tree });
 			const path = relative(process.cwd(), child.path.replace(/[\/\\]\d+_/g, '/'));
-			const file = join(process.cwd(), args.out, path).replace(/\.md$/, '.html');
+			const file = join(process.cwd(), config.out, path).replace(/\.md$/, '.html');
 			ensureDirSync(dirname(file));
 			writeFileSync(file, html);
 		});
-};
-
-walk(tree.children);
+})(tree.children);
