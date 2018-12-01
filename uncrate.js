@@ -9,15 +9,16 @@ const markdown = require('markdown-it')().use(require('markdown-it-anchor'), {
 });
 
 const args = options({
-	c: { alias: 'config', desc: 'Custom configuration file location', default: 'uncrate.config.js' },
-	d: { alias: 'description', desc: 'Generated site meta description' },
-	e: { alias: 'exclude', desc: 'RegExp of paths to ignore' },
-	l: { alias: 'logo', desc: 'URL of a project logo image' },
-	n: { alias: 'name', desc: 'Project name' },
-	o: { alias: 'out', desc: 'Path where the site should be generated' },
-	p: { alias: 'projectVersion', desc: 'Project version' },
-	r: { alias: 'repo', desc: 'URL of a project git repository' },
-	s: { alias: 'subdir', desc: 'Path to use as a base for generated URLs' }
+	c: { alias: 'config', desc: 'Configuration file path', default: 'uncrate.config.js' },
+	d: { alias: 'description', desc: 'Generated site meta description', type: 'string' },
+	e: { alias: 'exclude', desc: 'RegExp of paths to ignore', type: 'string' },
+	l: { alias: 'logo', desc: 'URL of a project logo image', type: 'string' },
+	n: { alias: 'name', desc: 'Project name', type: 'string' },
+	o: { alias: 'out', desc: 'Path where the site should be generated', type: 'string' },
+	p: { alias: 'projectVersion', desc: 'Project version', type: 'string' },
+	r: { alias: 'repo', desc: 'URL of a project git repository', type: 'string' },
+	s: { alias: 'root', desc: 'Path to use as a base for generated URLs', type: 'string' },
+	v: { alias: 'version', desc: 'Show version information' }
 }).alias('h', 'help').argv;
 
 const custom = join(process.cwd(), args.config);
