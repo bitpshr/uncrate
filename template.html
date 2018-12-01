@@ -73,10 +73,6 @@
                 text-transform: capitalize;
             }
 
-            nav .folder {
-
-            }
-
             nav .indent {
                 margin-bottom: 24px;
                 margin-left: 12px;
@@ -240,13 +236,14 @@
                 }
 
                 main {
+                    -webkit-overflow-scrolling: touch;
+                    overflow: auto;
                     padding: 0;
                 }
 
                 .content {
-                    -webkit-overflow-scrolling: touch;
+                    flex: 1;
                     min-height: 0;
-                    overflow: auto;
                 }
 
                 .copy {
@@ -391,6 +388,7 @@
         </div>
         <script>
             const header = document.querySelector('header');
+            const main = document.querySelector('main');
             function onScroll() {
                 document.body.classList.toggle('scroll', document.documentElement.scrollTop > header.offsetHeight);
             }
@@ -412,7 +410,8 @@
             });
 
             document.querySelector('#top').addEventListener('click', () => {
-                document.documentElement.scrollTop = 0;
+                document.documentElement.scrollTo(0, 0);
+                main.scrollTo(0, 0);
             });
         </script>
 	</body>
