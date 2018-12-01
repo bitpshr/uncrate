@@ -11,17 +11,18 @@ const markdown = require('markdown-it')().use(require('markdown-it-anchor'), {
 const args = options({
 	c: { alias: 'config', desc: 'Custom configuration file location', default: 'uncrate.config.js' },
 	d: { alias: 'description', desc: 'Generated site meta description' },
-	e: { alias: 'exclude', desc: 'RegExp of paths to ignore', default: 'node_modules' },
+	e: { alias: 'exclude', desc: 'RegExp of paths to ignore' },
 	l: { alias: 'logo', desc: 'URL of a project logo image' },
 	n: { alias: 'name', desc: 'Project name' },
-	o: { alias: 'out', desc: 'Path where the site should be generated', default: 'dist' },
+	o: { alias: 'out', desc: 'Path where the site should be generated' },
 	p: { alias: 'projectVersion', desc: 'Project version' },
 	r: { alias: 'repo', desc: 'URL of a project git repository' },
-	s: { alias: 'subdir', desc: 'Path to use as a base for generated URLs', default: '/' }
+	s: { alias: 'subdir', desc: 'Path to use as a base for generated URLs' }
 }).alias('h', 'help').argv;
 
-const configPath = join(process.cwd(), args.config);
-const config = existsSync(configPath) ? { ...require(configPath), ...args } : args;
+const custom = join(process.cwd(), args.config);
+const parsed = existsSync(custom) ? { ...require(custom), ...args } : args;
+const config = { out: 'dist', subdir: '/', ...parsed };
 
 removeSync(config.out);
 const template = readFileSync(join(__dirname, 'template.html'), 'utf8');
