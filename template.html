@@ -305,6 +305,21 @@
                 }
             }
         </style>
+        <%
+            if (config.assets) {
+                config.assets.forEach(asset => {
+                    if ((/.css$/).test(asset)) {
+        %>
+                        <link href="<%- asset %>" rel="stylesheet" type="text/css">
+        <%
+                    } else if ((/.js$/).test(asset)) {
+        %>
+                        <script src="<%- asset %>">
+        <%
+                    }
+                });
+            }
+        %>
 	</head>
 	<body>
         <header>

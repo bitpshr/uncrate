@@ -9,6 +9,7 @@ const markdown = require('markdown-it')().use(require('markdown-it-anchor'), {
 });
 
 const args = options({
+	a: { alias: 'assets', desc: 'External resource URL (JS or CSS)', type: 'array' },
 	c: { alias: 'config', desc: 'Configuration file path', default: 'uncrate.config.js' },
 	d: { alias: 'description', desc: 'Generated site meta description', type: 'string' },
 	e: { alias: 'exclude', desc: 'RegExp of paths to ignore', type: 'string' },
