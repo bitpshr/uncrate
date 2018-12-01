@@ -27,7 +27,7 @@ const config = { out: 'dist', subdir: '/', ...parsed };
 removeSync(config.out);
 const template = readFileSync(join(__dirname, 'template.html'), 'utf8');
 const tree = require('directory-tree')(process.cwd(), {
-	exclude: new RegExp(config.exclude),
+	exclude: config.exclude && new RegExp(config.exclude),
 	extensions: /\.md$/
 });
 
