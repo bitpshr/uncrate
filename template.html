@@ -341,7 +341,7 @@
                     <%
                                 children.sort().forEach(child => {
                                     if (child.type === 'directory') {
-                                        if (child.children) {
+                                        if (child.children && child.children.length > 0) {
                     %>
                                             <li>
                                                 <div class="folder"><%- getDisplayName(child) %></div>
