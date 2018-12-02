@@ -333,7 +333,7 @@
                 <% } %>
             </div>
             <div class="edit">
-                <a href="<%- config.subdir %>" class="help">
+                <a href="<%- config.root %>" class="help">
                     <i class="fa fa-home" aria-hidden="true"></i>
                 </a>
                 <% if (config.repo) { %>
@@ -349,7 +349,7 @@
             <nav>
                 <ul>
                     <li>
-                        <a href="<%- config.subdir %>">home</a>
+                        <a href="<%- config.root %>">home</a>
                     </li>
                     <%  const walk = (children) => { %>
                             <div class="indent">
@@ -369,7 +369,7 @@
                                     if (getDisplayName(child) !== 'index') {
                     %>
                                         <li>
-                                            <a href="<%- config.subdir %><%- relative(process.cwd(), child.path.replace(/[\/\\]\d+_/g, '/')).replace(/.md$/, '') %>"><%- getDisplayName(child) %></a>
+                                            <a href="<%- config.root %><%- relative(process.cwd(), child.path.replace(/[\/\\]\d+_/g, '/')).replace(/.md$/, '') %>"><%- getDisplayName(child) %></a>
                                         </li>
                     <%
                                     }
