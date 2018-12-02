@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+const hrtime = process.hrtime();
 const { dirname, join, relative } = require('path');
 const { existsSync, ensureDirSync, readFileSync, writeFileSync } = require('fs-extra');
 const { options } = require('yargs');
@@ -48,3 +49,4 @@ const filetree = require('directory-tree')(process.cwd(), {
 			writeFileSync(file, html);
 		});
 })(filetree.children);
+console.log(`🔥 Documentation generated in ${require('pretty-hrtime')(process.hrtime(hrtime))}`);
