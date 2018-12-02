@@ -15,6 +15,37 @@
   "author": "bitpshr <mail@bitpshr.net> (https://bitpshr.net/)",
   "bin": "./uncrate.js",
   "repository": "github:bitpshr/uncrate",
+  "scripts": {
+    "format": "prettier --write **/*.{js,json,css,md}"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,json,css,md}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "prettier": {
+    "printWidth": 120,
+    "singleQuote": true,
+    "useTabs": true,
+    "overrides": [
+      {
+        "files": [
+          "package.json",
+          "package-lock.json"
+        ],
+        "options": {
+          "tabWidth": 2,
+          "useTabs": false
+        }
+      }
+    ]
+  },
   "dependencies": {
     "directory-tree": "^2.1.1",
     "ejs": "^2.6.1",
@@ -23,5 +54,10 @@
     "markdown-it-anchor": "^5.0.2",
     "pretty-hrtime": "^1.0.3",
     "yargs": "^12.0.5"
+  },
+  "devDependencies": {
+    "husky": "^1.2.0",
+    "lint-staged": "^8.1.0",
+    "prettier": "1.15.3"
   }
 }

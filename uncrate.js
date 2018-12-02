@@ -21,6 +21,7 @@ const args = options({
 	p: { alias: 'projectVersion', desc: 'Project version', type: 'string' },
 	r: { alias: 'repo', desc: 'URL of a project git repository', type: 'string' },
 	s: { alias: 'root', desc: 'Path to use as a base for generated URLs', type: 'string' },
+	t: { alias: 'theme', desc: 'Enable default styling', type: 'boolean' },
 	v: { alias: 'version', desc: 'Show version information' }
 }).argv;
 
