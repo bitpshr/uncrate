@@ -9,10 +9,11 @@ const markdown = require('markdown-it')().use(require('markdown-it-anchor'), {
 });
 
 const args = options({
-	a: { alias: 'assets', desc: 'External resource URL (JS or CSS)', type: 'array' },
+	a: { alias: 'assets', desc: 'External resource URLs (JS or CSS)', type: 'array' },
 	c: { alias: 'config', desc: 'Configuration file path', default: 'uncrate.config.js' },
 	d: { alias: 'description', desc: 'Generated site meta description', type: 'string' },
 	e: { alias: 'excludes', desc: 'RegExps used to ignore folders', type: 'array' },
+	h: { alias: 'help' },
 	l: { alias: 'logo', desc: 'URL of a project logo image', type: 'string' },
 	n: { alias: 'name', desc: 'Project name', type: 'string' },
 	o: { alias: 'out', desc: 'Path where the site should be generated', type: 'string' },
@@ -20,7 +21,7 @@ const args = options({
 	r: { alias: 'repo', desc: 'URL of a project git repository', type: 'string' },
 	s: { alias: 'root', desc: 'Path to use as a base for generated URLs', type: 'string' },
 	v: { alias: 'version', desc: 'Show version information' }
-}).alias('h', 'help').argv;
+}).argv;
 
 const custom = join(process.cwd(), args.config);
 const parsed = existsSync(custom) ? { ...require(custom), ...args } : args;
