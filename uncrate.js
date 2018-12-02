@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const { dirname, join, relative } = require('path');
-const { existsSync, ensureDirSync, readFileSync, removeSync, writeFileSync } = require('fs-extra');
+const { existsSync, ensureDirSync, readFileSync, writeFileSync } = require('fs-extra');
 const { options } = require('yargs');
 const markdown = require('markdown-it')().use(require('markdown-it-anchor'), {
 	permalink: true,
@@ -26,10 +26,9 @@ const custom = join(process.cwd(), args.config);
 const parsed = existsSync(custom) ? { ...require(custom), ...args } : args;
 const config = { out: 'dist', subdir: '/', ...parsed };
 
-removeSync(config.out);
 const template = readFileSync(join(__dirname, 'template.html'), 'utf8');
-const tree = require('directory-tree')(process.cwd(), {
-	exclude: config.exclude && new RegExp(config.exclude),
+const filetree = require('directory-tree')(process.cwd(), {
+	exclude: new RegExp(config.exclude ? `${config.exclude}|(${config.out})` : config.out),
 	extensions: /\.md$/
 });
 
@@ -41,10 +40,10 @@ const tree = require('directory-tree')(process.cwd(), {
 				return child.children && walk(child.children);
 			}
 			const copy = markdown.render(readFileSync(child.path, 'utf8'));
-			const html = require('ejs').render(template, { config, copy, relative, tree });
+			const html = require('ejs').render(template, { config, copy, filetree, relative });
 			const path = relative(process.cwd(), child.path.replace(/[\/\\]\d+_/g, '/'));
 			const file = join(process.cwd(), config.out, path).replace(/\.md$/, '.html');
 			ensureDirSync(dirname(file));
 			writeFileSync(file, html);
 		});
-})(tree.children);
+})(filetree.children);
