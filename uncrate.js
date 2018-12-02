@@ -12,7 +12,7 @@ const args = options({
 	a: { alias: 'assets', desc: 'External resource URL (JS or CSS)', type: 'array' },
 	c: { alias: 'config', desc: 'Configuration file path', default: 'uncrate.config.js' },
 	d: { alias: 'description', desc: 'Generated site meta description', type: 'string' },
-	e: { alias: 'exclude', desc: 'RegExp of paths to ignore', type: 'string' },
+	e: { alias: 'excludes', desc: 'RegExps used to ignore folders', type: 'array' },
 	l: { alias: 'logo', desc: 'URL of a project logo image', type: 'string' },
 	n: { alias: 'name', desc: 'Project name', type: 'string' },
 	o: { alias: 'out', desc: 'Path where the site should be generated', type: 'string' },
@@ -24,11 +24,11 @@ const args = options({
 
 const custom = join(process.cwd(), args.config);
 const parsed = existsSync(custom) ? { ...require(custom), ...args } : args;
-const config = { out: 'dist', subdir: '/', ...parsed };
+const config = { excludes: [], out: 'dist', subdir: '/', ...parsed };
 
 const template = readFileSync(join(__dirname, 'template.html'), 'utf8');
 const filetree = require('directory-tree')(process.cwd(), {
-	exclude: config.exclude && new RegExp(config.exclude),
+	exclude: config.excludes && config.excludes.map(exclude => new RegExp(exclude)),
 	extensions: /\.md$/
 });
 
