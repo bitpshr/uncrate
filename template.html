@@ -5,10 +5,13 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="description" content="<%- config.description %>">
         <link rel="icon" type="image/png" href="<%- config.logo %>">
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
         <% if (config.theme) { %>
             <style>
                 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700');
                 @import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+                @import url('//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css');
+                @import url('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/solarized-dark.min.css');
 
                 * {
                     box-sizing: border-box;
@@ -19,7 +22,7 @@
                     color: #333;
                     font-family: 'Roboto', sans-serif;
                     font-size: 16px;
-                    line-height: 28px;
+                    line-height: 24px;
                     margin: 0;
                 }
 

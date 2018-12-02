@@ -4,10 +4,16 @@ const hrtime = process.hrtime();
 const { dirname, join, relative } = require('path');
 const { existsSync, ensureDirSync, readFileSync, writeFileSync } = require('fs-extra');
 const { options } = require('yargs');
-const markdown = require('markdown-it')().use(require('markdown-it-anchor'), {
-	permalink: true,
-	permalinkSymbol: '#'
-});
+const markdown = require('markdown-it')({
+	html: true,
+	linkify: true,
+	typographer: true
+})
+	.use(require('markdown-it-highlightjs'))
+	.use(require('markdown-it-anchor'), {
+		permalink: true,
+		permalinkSymbol: '#'
+	});
 
 const args = options({
 	a: { alias: 'assets', desc: 'External resource URLs (JS or CSS)', type: 'array' },
