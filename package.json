@@ -1,6 +1,6 @@
 {
   "name": "uncrate",
-  "version": "1.0.0-alpha.12",
+  "version": "1.0.0-beta.0",
   "description": "Minimal documentation generator based on file structure",
   "keywords": [
     "static",
