@@ -21,7 +21,6 @@
 
                 html,
                 body {
-                    color: #333;
                     font-family: 'Roboto', sans-serif;
                 }
 
@@ -32,8 +31,8 @@
                 }
 
                 header {
-                    border-bottom: 1px solid lightgray;
-                    box-shadow: -4px -4px 9px 1px grey;
+                    border-bottom: 1px solid gainsboro;
+                    box-shadow: -4px -4px 8px 1px grey;
                     display: flex;
                     flex-grow: 0;
                     flex-shrink: 0;
@@ -47,8 +46,8 @@
                 }
 
                 nav {
-                    background-color: #F5F7F9;
-                    border-right: 1px solid lightgray;
+                    background-color: whitesmoke;
+                    border-right: 1px solid gainsboro;
                     flex-grow: 0;
                     flex-shrink: 0;
                     padding: 24px;
@@ -56,7 +55,7 @@
                     width: 288px;
                 }
 
-                nav.wysiwyg ul {
+                nav ul {
                     margin: 0;
                     padding: 0;
                 }
@@ -143,10 +142,10 @@
                 }
 
                 .feedback {
-                    background-color: #E6ECF1;
+                    background-color: #E8E8E8;
                     border-radius: 3px;
                     bottom: 24px;
-                    color: #9DAAB6;
+                    color: darkgray;
                     font-size: 12px;
                     left: 24px;
                     line-height: 1.6;
@@ -167,7 +166,7 @@
                     transform: translateY(-50%);
                 }
 
-                .menu {
+                .actions {
                     align-items: center;
                     display: flex;
                     flex: 1;
@@ -175,12 +174,12 @@
                     padding: 24px;
                 }
 
-                .menu a {
+                .actions a {
                     border-bottom: 0;
                     color: inherit;
                 }
 
-                .menu > * {
+                .actions > * {
                     cursor: pointer;
                     height: 20px;
                     line-height: 20px;
@@ -190,7 +189,7 @@
                 }
 
                 .version {
-                    color: gray;
+                    color: darkgray;
                     font-size: 16px;
                 }
 
@@ -208,9 +207,9 @@
                 }
 
                 .bottomMatter {
-                    color: lightgray;
+                    color: darkgray;
                     display: inline-block;
-                    margin: 32px 0;
+                    margin: 56px 0;
                     position: relative;
                     width: 100%;
                 }
@@ -234,6 +233,10 @@
                         padding: 0;
                     }
 
+                    header {
+                        z-index: auto;
+                    }
+
                     .content {
                         flex: 1;
                         min-height: 0;
@@ -255,8 +258,9 @@
                     }
 
                     nav {
-                        border-left: 1px solid lightgray;
+                        border-left: 1px solid gainsboro;
                         border-right: 0;
+                        box-shadow: 4px 4px 9px 1px grey;
                         display: block !important;
                         height: 100%;
                         max-width: calc(100vw - 48px);
@@ -273,7 +277,7 @@
                         width: 100%;
                     }
 
-                    .menu {
+                    .actions {
                         flex-grow: 0;
                         flex-shrink: 0;
                         padding: 12px;
@@ -300,7 +304,7 @@
 
                 /* Markdown styles */
                 blockquote {
-                    border-left: 4px solid lightgray;
+                    border-left: 4px solid gainsboro;
                     margin-left: 0;
                     padding-left: 1em;
                     padding-right: 1em;
@@ -312,24 +316,28 @@
 
                 table th,
                 table td {
-                    border: 1px solid lightgray;
+                    border: 1px solid gainsboro;
                     padding: 4px 8px;
                 }
 
                 table tbody tr:nth-child(even) {
-                    background: #EEE;
+                    background: whitesmoke;
                 }
 
                 code {
-                    background-color: #EEE;
-                    border-radius: 3px;
-                    font-size: 85%;
-                    padding: 4px;
+                    background-color: whitesmoke !important;
+                    border-radius: 3px !important;
+                    font-size: 85% !important;
+                    padding: 4px !important;
+                }
+
+                .hljs {
+                    padding: 8px !important;
                 }
 
                 a {
                     border-bottom: 1px solid;
-                    color: #2980b9;
+                    color: dodgerblue;
                     text-decoration: none;
                 }
 
@@ -358,7 +366,7 @@
                 <%- config.name %>
                 <span class="version"><%- config.projectVersion %></span>
             </div>
-            <div class="menu">
+            <div class="actions">
                 <a href="<%- config.root %>" class="help">
                     <i class="fa fa-home" aria-hidden="true"></i>
                 </a>
