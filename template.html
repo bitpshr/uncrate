@@ -5,14 +5,15 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="description" content="<%- config.description %>">
         <link rel="icon" type="image/png" href="<%- config.logo %>">
-        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+
+        <link href="//fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet" type="text/css">
+        <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css" rel="stylesheet" type="text/css">
+        <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/github.min.css" rel="stylesheet" type="text/css">
+        <link href="//unpkg.com/wysiwyg.css/wysiwyg.css" rel="stylesheet" type="text/css">
+
         <% if (config.theme) { %>
             <style>
-                @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700');
-                @import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
-                @import url('//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css');
-                @import url('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/solarized-dark.min.css');
-
                 * {
                     box-sizing: border-box;
                 }
@@ -21,8 +22,6 @@
                 body {
                     color: #333;
                     font-family: 'Roboto', sans-serif;
-                    font-size: 16px;
-                    line-height: 24px;
                     margin: 0;
                 }
 
@@ -31,12 +30,21 @@
                     flex-direction: column;
                 }
 
+                .wysiwyg pre,
+                .wysiwyg pre > code {
+                    color: inherit;
+                    font-size: inherit;
+                    line-height: 1.4;
+                }
+
                 header {
                     border-bottom: 1px solid lightgray;
+                    box-shadow: -4px -4px 9px 1px grey;
                     display: flex;
                     flex-grow: 0;
                     flex-shrink: 0;
                     position: relative;
+                    z-index: 1;
                 }
 
                 .content {
@@ -54,7 +62,7 @@
                     width: 288px;
                 }
 
-                nav ul {
+                nav.wysiwyg ul {
                     margin: 0;
                     padding: 0;
                 }
@@ -78,7 +86,7 @@
                 }
 
                 nav .indent {
-                    margin-bottom: 24px;
+                    margin-bottom: 1.4em;
                     margin-left: 12px;
                 }
 
@@ -136,12 +144,7 @@
                     visibility: hidden;
                 }
 
-                h1:hover .header-anchor,
-                h2:hover .header-anchor,
-                h3:hover .header-anchor,
-                h4:hover .header-anchor,
-                h5:hover .header-anchor,
-                h6:hover .header-anchor {
+                *:hover > .header-anchor {
                     visibility: visible;
                 }
 
@@ -219,7 +222,6 @@
                 .bottomMatter {
                     color: lightgray;
                     display: inline-block;
-                    font-size: 12px;
                     font-weight: 400;
                     margin: 32px 0;
                     position: relative;
@@ -339,7 +341,7 @@
             </div>
         </header>
         <div class="content">
-            <nav>
+            <nav class="wysiwyg">
                 <ul>
                     <li>
                         <a href="<%- config.root %>">home</a>
@@ -375,7 +377,7 @@
                 <% } %>
             </nav>
             <main>
-                <div class="container">
+                <div class="container wysiwyg">
                     <%- copy %>
                     <div class="bottomMatter">
                         Last updated:
@@ -386,6 +388,7 @@
                 </div>
             </main>
         </div>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
         <script>
             const header = document.querySelector('header');
             const main = document.querySelector('main');
