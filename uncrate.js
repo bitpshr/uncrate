@@ -10,6 +10,7 @@ const markdown = require('markdown-it')({
 	typographer: true
 })
 	.use(require('markdown-it-highlightjs'))
+	.use(require('markdown-it-task-lists'))
 	.use(require('markdown-it-anchor'), {
 		permalink: true,
 		permalinkSymbol: '#'

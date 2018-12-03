@@ -6,13 +6,14 @@
 		<meta name="description" content="<%- config.description %>">
         <link rel="icon" type="image/png" href="<%- config.logo %>">
 
-        <link href="//fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet" type="text/css">
         <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css" rel="stylesheet" type="text/css">
         <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/github.min.css" rel="stylesheet" type="text/css">
-        <link href="//unpkg.com/wysiwyg.css/wysiwyg.css" rel="stylesheet" type="text/css">
 
         <% if (config.theme) { %>
+            <link href="//cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet" type="text/css">
+            <link href="//fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet" type="text/css">
+
             <style>
                 * {
                     box-sizing: border-box;
@@ -22,19 +23,12 @@
                 body {
                     color: #333;
                     font-family: 'Roboto', sans-serif;
-                    margin: 0;
                 }
 
                 body {
                     display: flex;
                     flex-direction: column;
-                }
-
-                .wysiwyg pre,
-                .wysiwyg pre > code {
-                    color: inherit;
-                    font-size: inherit;
-                    line-height: 1.4;
+                    line-height: 1.6;
                 }
 
                 header {
@@ -116,7 +110,7 @@
                     padding-top: 0;
                 }
 
-                .title {
+                .name {
                     flex-grow: 0;
                     flex-shrink: 0;
                     font-size: 24px;
@@ -173,7 +167,7 @@
                     transform: translateY(-50%);
                 }
 
-                .edit {
+                .menu {
                     align-items: center;
                     display: flex;
                     flex: 1;
@@ -181,12 +175,12 @@
                     padding: 24px;
                 }
 
-                .edit a {
+                .menu a {
                     border-bottom: 0;
                     color: inherit;
                 }
 
-                .edit > * {
+                .menu > * {
                     cursor: pointer;
                     height: 20px;
                     line-height: 20px;
@@ -213,16 +207,9 @@
                     z-index: 2;
                 }
 
-                a {
-                    border-bottom: 1px solid;
-                    color: #2980b9;
-                    text-decoration: none;
-                }
-
                 .bottomMatter {
                     color: lightgray;
                     display: inline-block;
-                    font-weight: 400;
                     margin: 32px 0;
                     position: relative;
                     width: 100%;
@@ -286,7 +273,7 @@
                         width: 100%;
                     }
 
-                    .edit {
+                    .menu {
                         flex-grow: 0;
                         flex-shrink: 0;
                         padding: 12px;
@@ -296,7 +283,7 @@
                         transform: translateX(0);
                     }
 
-                    .title {
+                    .name {
                         flex: 1;
                         font-size: 18px;
                         padding: 12px 12px 12px 54px;
@@ -310,6 +297,50 @@
                         width: 24px;
                     }
                 }
+
+                /* Markdown styles */
+                blockquote {
+                    border-left: 4px solid lightgray;
+                    margin-left: 0;
+                    padding-left: 1em;
+                    padding-right: 1em;
+                }
+
+                table {
+                    border-collapse: collapse;
+                }
+
+                table th,
+                table td {
+                    border: 1px solid lightgray;
+                    padding: 4px 8px;
+                }
+
+                table tbody tr:nth-child(even) {
+                    background: #EEE;
+                }
+
+                code {
+                    background-color: #EEE;
+                    border-radius: 3px;
+                    font-size: 85%;
+                    padding: 4px;
+                }
+
+                a {
+                    border-bottom: 1px solid;
+                    color: #2980b9;
+                    text-decoration: none;
+                }
+
+                .contains-task-list {
+                    list-style: none;
+                    padding-left: 18px;
+                }
+
+                .task-list-item-checkbox {
+                    margin-right: 4px;
+                }
             </style>
         <% } %>
         <% config.assets && config.assets.forEach(asset => { %>
@@ -322,12 +353,12 @@
 	</head>
 	<body>
         <header>
-            <div class="title">
+            <div class="name">
                 <div class="logo" style="background-image: url(<%- config.logo %>)"></div>
                 <%- config.name %>
                 <span class="version"><%- config.projectVersion %></span>
             </div>
-            <div class="edit">
+            <div class="menu">
                 <a href="<%- config.root %>" class="help">
                     <i class="fa fa-home" aria-hidden="true"></i>
                 </a>
@@ -341,7 +372,7 @@
             </div>
         </header>
         <div class="content">
-            <nav class="wysiwyg">
+            <nav>
                 <ul>
                     <li>
                         <a href="<%- config.root %>">home</a>
@@ -377,7 +408,7 @@
                 <% } %>
             </nav>
             <main>
-                <div class="container wysiwyg">
+                <div class="container">
                     <%- copy %>
                     <div class="bottomMatter">
                         Last updated:
