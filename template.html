@@ -370,8 +370,8 @@
                 <a href="<%- config.root %>" class="help">
                     <i class="fa fa-home" aria-hidden="true"></i>
                 </a>
-                <% if (config.repo) { %>
-                    <a href="https://github.com/<%- config.repo %>" class="pullrequest">
+                <% if (config.sourceRepo) { %>
+                    <a href="https://github.com/<%- config.sourceRepo %>" class="pullrequest">
                         <i class="fa fa-pencil" aria-hidden="true"></i>
                     </a>
                 <% } %>
@@ -407,11 +407,11 @@
                     <% }; %>
                     <% walk(filetree.children); %>
                 </ul>
-                <% if (config.repo) { %>
+                <% if (config.sourceRepo) { %>
                     <div class="feedback">
                         <i class="fa fa-bug" aria-hidden="true"></i>
                         Found a documentation bug?<br>
-                        <a href="https://github.com/<%- config.repo %>/issues/new">File an issue</a>
+                        <a href="https://github.com/<%- config.sourceRepo %>/issues/new">File an issue</a>
                     </div>
                 <% } %>
             </nav>
